@@ -1,0 +1,188 @@
+/* ── Fonts (Google Fonts) — must come before other @import rules ───── */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+
+@import 'tailwindcss';
+
+/* ── Theme tokens ─────────────────────────────────────────────────── */
+@theme {
+  --color-ink: #0a0805;          /* near-black background       */
+  --color-ink-2: #120d08;        /* slightly lifted panel       */
+  --color-ink-3: #1c150d;        /* card / border base          */
+  --color-gold: #c9a84c;         /* primary gold                */
+  --color-gold-light: #e8d5a3;   /* light champagne gold        */
+  --color-gold-deep: #8a6d2f;    /* deep antique gold           */
+  --color-cream: #f5efe2;        /* warm cream text on dark     */
+
+  --font-cinzel: 'Cinzel', serif;
+  --font-cormorant: 'Cormorant Garamond', serif;
+  --font-montserrat: 'Montserrat', sans-serif;
+}
+
+/* ── Base ─────────────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-ink);
+  color: var(--color-cream);
+  font-family: var(--font-cormorant);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+/* thin gold scrollbar */
+::-webkit-scrollbar { width: 9px; }
+::-webkit-scrollbar-track { background: var(--color-ink); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--color-gold-deep), var(--color-gold));
+  border-radius: 0;
+}
+
+/* ── Utility classes ──────────────────────────────────────────────── */
+.font-cinzel { font-family: var(--font-cinzel); }
+.font-cormorant { font-family: var(--font-cormorant); }
+.font-montserrat { font-family: var(--font-montserrat); }
+
+/* gold gradient text */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #e8d5a3 0%, #c9a84c 45%, #8a6d2f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* the small uppercase tracked label used everywhere */
+.eyebrow {
+  font-family: var(--font-montserrat);
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.75);
+}
+
+/* thin gold hairline divider with a center diamond */
+.hairline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--color-gold);
+}
+.hairline::before,
+.hairline::after {
+  content: '';
+  height: 1px;
+  width: 60px;
+  background: linear-gradient(to right, transparent, rgba(201, 168, 76, 0.6), transparent);
+}
+
+/* faint luxury grain/vignette overlay */
+.vignette {
+  position: relative;
+}
+.vignette::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* shimmering gold button */
+.btn-gold {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-cinzel);
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #1a1208;
+  background: linear-gradient(135deg, #e8d5a3, #c9a84c 55%, #b08f3a);
+  padding: 15px 34px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+  box-shadow: 0 8px 30px -10px rgba(201, 168, 76, 0.6);
+}
+.btn-gold:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px -10px rgba(201, 168, 76, 0.7);
+}
+.btn-gold:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ghost / outline button */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-cinzel);
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  background: transparent;
+  padding: 14px 32px;
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.btn-ghost:hover {
+  background: rgba(201, 168, 76, 0.08);
+  border-color: var(--color-gold);
+}
+
+/* form field */
+.field {
+  width: 100%;
+  background: var(--color-ink);
+  border: 1px solid rgba(201, 168, 76, 0.22);
+  color: var(--color-cream);
+  font-family: var(--font-cormorant);
+  font-size: 16px;
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.field::placeholder { color: rgba(245, 239, 226, 0.35); }
+.field:focus { border-color: var(--color-gold); }
+select.field option { background: var(--color-ink-2); color: var(--color-cream); }
+
+.field-label {
+  display: block;
+  font-family: var(--font-montserrat);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.7);
+  margin-bottom: 7px;
+}
+
+/* card */
+.lux-card {
+  background: linear-gradient(160deg, rgba(28, 21, 13, 0.9), rgba(18, 13, 8, 0.95));
+  border: 1px solid rgba(201, 168, 76, 0.18);
+  backdrop-filter: blur(2px);
+}
+
+/* hide scrollbars on marquee rows */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
