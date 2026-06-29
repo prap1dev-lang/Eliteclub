@@ -36,9 +36,9 @@ export default function ParallaxStrip() {
         {row.map((src, i) => (
           <div
             key={`a-${i}`}
-            className="relative w-[230px] h-[300px] shrink-0 overflow-hidden border border-gold/15"
+            className="relative w-[160px] h-[210px] sm:w-[230px] sm:h-[300px] shrink-0 overflow-hidden border border-white/10"
           >
-            <Image src={src} alt="" fill sizes="230px" className="object-cover grayscale-[25%]" />
+            <Image src={src} alt="" fill sizes="(max-width: 640px) 160px, 230px" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent" />
           </div>
         ))}
@@ -48,9 +48,9 @@ export default function ParallaxStrip() {
         {row.reverse().map((src, i) => (
           <div
             key={`b-${i}`}
-            className="relative w-[230px] h-[300px] shrink-0 overflow-hidden border border-gold/15"
+            className="relative w-[160px] h-[210px] sm:w-[230px] sm:h-[300px] shrink-0 overflow-hidden border border-white/10"
           >
-            <Image src={src} alt="" fill sizes="230px" className="object-cover grayscale-[25%]" />
+            <Image src={src} alt="" fill sizes="(max-width: 640px) 160px, 230px" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent" />
           </div>
         ))}

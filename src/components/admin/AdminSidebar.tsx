@@ -38,8 +38,8 @@ export default function AdminSidebar() {
               href={item.href}
               className={`flex items-center gap-3 px-4 py-3 font-montserrat text-[12px] tracking-[0.12em] uppercase transition-colors ${
                 active
-                  ? 'bg-gold/12 text-gold border-l-2 border-gold'
-                  : 'text-cream/55 hover:text-gold hover:bg-gold/5 border-l-2 border-transparent'
+                  ? 'bg-orange-500/12 text-orange-400 border-l-2 border-orange-500'
+                  : 'text-cream/55 hover:text-white hover:bg-white/5 border-l-2 border-transparent'
               }`}
             >
               <Icon size={17} />

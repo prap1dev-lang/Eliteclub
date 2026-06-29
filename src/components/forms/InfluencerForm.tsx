@@ -215,7 +215,7 @@ function PackageOption({
       type="button"
       onClick={onClick}
       className={`text-left p-4 border transition-all ${
-        active ? 'border-gold bg-gold/10' : 'border-gold/20 hover:border-gold/45'
+        active ? 'border-orange-500 bg-orange-500/10' : 'border-white/15 hover:border-orange-500/45'
       }`}
     >
       <span className="block font-cinzel text-cream text-[15px] leading-tight">{name}</span>

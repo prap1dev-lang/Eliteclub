@@ -25,7 +25,7 @@ export default function Logo({
           <span className="font-cinzel text-gold-light tracking-[0.22em] text-[15px]">
             ELITE CLUB
           </span>
-          <span className="font-montserrat text-[8px] tracking-[0.35em] text-gold/60 mt-1">
+          <span className="font-montserrat text-[8px] tracking-[0.35em] text-orange-400/80 mt-1">
             RESERVED FOR RARE
           </span>
         </span>

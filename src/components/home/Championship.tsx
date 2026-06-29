@@ -15,7 +15,7 @@ export default function Championship() {
     <section id="championship" ref={ref} className="relative py-28 overflow-hidden bg-ink">
       <motion.div
         style={{ y: glowY }}
-        className="pointer-events-none absolute left-1/2 top-1/3 -translate-x-1/2 w-[50vw] h-[50vw] rounded-full bg-gold/10 blur-[130px]"
+        className="pointer-events-none absolute left-1/2 top-1/3 -translate-x-1/2 w-[50vw] h-[50vw] rounded-full bg-orange-500/10 blur-[130px]"
       />
       <div className="relative max-w-6xl mx-auto px-5 sm:px-8">
         <Reveal className="text-center mb-16">

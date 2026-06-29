@@ -27,7 +27,7 @@ export default function Packages() {
                 }`}
               >
                 {pkg.highlight && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-ink font-montserrat text-[9px] tracking-[0.25em] uppercase px-4 py-1.5 flex items-center gap-1.5">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-orange-500 text-white font-montserrat text-[9px] tracking-[0.25em] uppercase px-4 py-1.5 flex items-center gap-1.5">
                     <Star size={11} /> Most Popular
                   </span>
                 )}

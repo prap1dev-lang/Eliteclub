@@ -4,7 +4,7 @@ import Reveal from '@/components/Reveal'
 export default function FinalCTA() {
   return (
     <section className="relative py-32 bg-ink-2 border-t border-gold/15 overflow-hidden">
-      <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[40vw] rounded-full bg-gold/8 blur-[120px]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[40vw] rounded-full bg-orange-500/10 blur-[120px]" />
       <Reveal className="relative max-w-3xl mx-auto px-6 text-center">
         <div className="hairline mb-7"><span className="font-cinzel text-gold text-sm tracking-[0.3em]">JOIN THE ELITE</span></div>
         <h2 className="font-cinzel text-4xl md:text-6xl text-cream leading-[1.05] mb-6">

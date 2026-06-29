@@ -3,15 +3,28 @@
 
 @import 'tailwindcss';
 
-/* ── Theme tokens ─────────────────────────────────────────────────── */
+/* ── Theme tokens ─────────────────────────────────────────────────────
+   Palette: BLACK / GREY / WHITE, with ORANGE reserved for buttons + a few
+   intentional accents. The old "gold/cream/ink" token NAMES are kept so the
+   whole app re-themes by changing these values only — but the values are now
+   monochrome. Orange lives in --color-orange* and is applied selectively.
+*/
 @theme {
-  --color-ink: #0a0805;          /* near-black background       */
-  --color-ink-2: #120d08;        /* slightly lifted panel       */
-  --color-ink-3: #1c150d;        /* card / border base          */
-  --color-gold: #c9a84c;         /* primary gold                */
-  --color-gold-light: #e8d5a3;   /* light champagne gold        */
-  --color-gold-deep: #8a6d2f;    /* deep antique gold           */
-  --color-cream: #f5efe2;        /* warm cream text on dark     */
+  --color-ink: #0d0d0f;          /* near-black background        */
+  --color-ink-2: #161618;        /* slightly lifted panel        */
+  --color-ink-3: #1f1f22;        /* card / border base           */
+
+  /* "gold" tokens are now neutral grey/white so all legacy text & borders
+     render monochrome automatically across the app. */
+  --color-gold: #b8b8be;         /* mid light-grey (was gold)    */
+  --color-gold-light: #f4f4f6;   /* near-white   (was champagne) */
+  --color-gold-deep: #6a6a70;    /* darker grey  (was antique)   */
+  --color-cream: #ededf0;        /* off-white body text          */
+
+  /* ORANGE — buttons + selective accents only */
+  --color-orange: #ff6a1a;
+  --color-orange-light: #ff8a45;
+  --color-orange-deep: #e2540a;
 
   --font-cinzel: 'Cinzel', serif;
   --font-cormorant: 'Cormorant Garamond', serif;
@@ -36,15 +49,15 @@ body {
 }
 
 ::selection {
-  background: var(--color-gold);
-  color: var(--color-ink);
+  background: var(--color-orange);
+  color: #fff;
 }
 
-/* thin gold scrollbar */
+/* scrollbar */
 ::-webkit-scrollbar { width: 9px; }
 ::-webkit-scrollbar-track { background: var(--color-ink); }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(var(--color-gold-deep), var(--color-gold));
+  background: var(--color-orange);
   border-radius: 0;
 }
 
@@ -53,37 +66,37 @@ body {
 .font-cormorant { font-family: var(--font-cormorant); }
 .font-montserrat { font-family: var(--font-montserrat); }
 
-/* gold gradient text */
+/* accent gradient text — orange highlight for headline words */
 .text-gold-gradient {
-  background: linear-gradient(135deg, #e8d5a3 0%, #c9a84c 45%, #8a6d2f 100%);
+  background: linear-gradient(135deg, #ff8a45 0%, #ff6a1a 55%, #e2540a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* the small uppercase tracked label used everywhere */
+/* the small uppercase tracked label used everywhere (neutral grey) */
 .eyebrow {
   font-family: var(--font-montserrat);
   font-size: 11px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: rgba(201, 168, 76, 0.75);
+  color: rgba(255, 255, 255, 0.55);
 }
 
-/* thin gold hairline divider with a center diamond */
+/* thin hairline divider with a center accent */
 .hairline {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 14px;
-  color: var(--color-gold);
+  color: var(--color-orange);
 }
 .hairline::before,
 .hairline::after {
   content: '';
   height: 1px;
   width: 60px;
-  background: linear-gradient(to right, transparent, rgba(201, 168, 76, 0.6), transparent);
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.35), transparent);
 }
 
 /* faint luxury grain/vignette overlay */
@@ -98,7 +111,7 @@ body {
   background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
 }
 
-/* shimmering gold button */
+/* primary ORANGE button */
 .btn-gold {
   position: relative;
   display: inline-flex;
@@ -109,18 +122,18 @@ body {
   font-size: 12px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: #1a1208;
-  background: linear-gradient(135deg, #e8d5a3, #c9a84c 55%, #b08f3a);
+  color: #fff;
+  background: linear-gradient(135deg, #ff8a45, #ff6a1a 55%, #e2540a);
   padding: 15px 34px;
   border: none;
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
-  box-shadow: 0 8px 30px -10px rgba(201, 168, 76, 0.6);
+  box-shadow: 0 8px 30px -10px rgba(255, 106, 26, 0.6);
 }
 .btn-gold:hover {
-  filter: brightness(1.08);
+  filter: brightness(1.06);
   transform: translateY(-2px);
-  box-shadow: 0 14px 40px -10px rgba(201, 168, 76, 0.7);
+  box-shadow: 0 14px 40px -10px rgba(255, 106, 26, 0.75);
 }
 .btn-gold:disabled {
   opacity: 0.55;
@@ -128,7 +141,7 @@ body {
   transform: none;
 }
 
-/* ghost / outline button */
+/* ghost / outline button — neutral, orange edge on hover */
 .btn-ghost {
   display: inline-flex;
   align-items: center;
@@ -138,23 +151,24 @@ body {
   font-size: 12px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--color-gold-light);
+  color: #fff;
   background: transparent;
   padding: 14px 32px;
-  border: 1px solid rgba(201, 168, 76, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   cursor: pointer;
   transition: all 0.25s ease;
 }
 .btn-ghost:hover {
-  background: rgba(201, 168, 76, 0.08);
-  border-color: var(--color-gold);
+  background: rgba(255, 106, 26, 0.1);
+  border-color: var(--color-orange);
+  color: var(--color-orange-light);
 }
 
 /* form field */
 .field {
   width: 100%;
   background: var(--color-ink);
-  border: 1px solid rgba(201, 168, 76, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   color: var(--color-cream);
   font-family: var(--font-cormorant);
   font-size: 16px;
@@ -162,8 +176,8 @@ body {
   outline: none;
   transition: border-color 0.2s ease;
 }
-.field::placeholder { color: rgba(245, 239, 226, 0.35); }
-.field:focus { border-color: var(--color-gold); }
+.field::placeholder { color: rgba(237, 237, 240, 0.35); }
+.field:focus { border-color: var(--color-orange); }
 select.field option { background: var(--color-ink-2); color: var(--color-cream); }
 
 .field-label {
@@ -172,14 +186,14 @@ select.field option { background: var(--color-ink-2); color: var(--color-cream);
   font-size: 10px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: rgba(201, 168, 76, 0.7);
+  color: rgba(255, 255, 255, 0.55);
   margin-bottom: 7px;
 }
 
-/* card */
+/* card — dark grey panel with subtle light border */
 .lux-card {
-  background: linear-gradient(160deg, rgba(28, 21, 13, 0.9), rgba(18, 13, 8, 0.95));
-  border: 1px solid rgba(201, 168, 76, 0.18);
+  background: linear-gradient(160deg, rgba(31, 31, 34, 0.92), rgba(22, 22, 24, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(2px);
 }
 

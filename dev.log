@@ -6,7 +6,4 @@
 - Local:         http://localhost:3000
 - Network:       http://192.168.72.1:3000
 - Environments: .env.local
-✓ Ready in 1589ms
-- Experiments (use with caution):
-  · optimizePackageImports
-
+✓ Ready in 5.4s

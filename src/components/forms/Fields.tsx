@@ -76,8 +76,8 @@ export function PillGroup({
             onClick={() => toggle(opt)}
             className={`font-montserrat text-[11px] tracking-wide px-3 py-1.5 border transition-colors ${
               active
-                ? 'border-gold bg-gold/15 text-gold-light'
-                : 'border-gold/20 text-cream/60 hover:border-gold/45'
+                ? 'border-orange-500 bg-orange-500/15 text-orange-300'
+                : 'border-white/15 text-cream/60 hover:border-orange-500/50'
             }`}
           >
             {opt}

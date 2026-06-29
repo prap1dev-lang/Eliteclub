@@ -40,7 +40,7 @@ export default function Navbar() {
             <Link
               key={l.href}
               href={l.href}
-              className="font-montserrat text-[11px] tracking-[0.2em] uppercase text-cream/75 hover:text-gold transition-colors"
+              className="font-montserrat text-[11px] tracking-[0.2em] uppercase text-cream/75 hover:text-orange-400 transition-colors"
             >
               {l.label}
             </Link>
@@ -51,7 +51,7 @@ export default function Navbar() {
         </div>
 
         <button
-          className="lg:hidden text-gold"
+          className="lg:hidden text-orange-400"
           onClick={() => setOpen((v) => !v)}
           aria-label="Menu"
         >
@@ -67,7 +67,7 @@ export default function Navbar() {
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="font-cinzel text-[15px] tracking-[0.15em] text-cream/85 hover:text-gold"
+                className="font-cinzel text-[15px] tracking-[0.15em] text-cream/85 hover:text-orange-400"
               >
                 {l.label}
               </Link>
