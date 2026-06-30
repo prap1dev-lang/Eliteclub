@@ -174,12 +174,21 @@ export const FEES = {
   videographerRegistration: 0,
 }
 
+// ── Launch offer: first N influencer registrations are FREE ──────────
+// The first FREE_SLOT_LIMIT influencers pay ₹0 (instead of the normal
+// influencerRegistration fee). After the limit is reached the fee applies.
+// The count is enforced server-side at insert time (single source of truth).
+export const FREE_SLOT_LIMIT = 100
+
 // ── Registration role meta (drives /register cards + forms) ──────────
 export const ROLE_META = {
   influencer: {
     title: 'Influencer',
     fee: FEES.influencerRegistration,
     feeLabel: '₹1,100',
+    // Launch offer copy — first 100 registrations are free.
+    offerLabel: 'FREE',
+    offerNote: 'Free for the first 100 users',
     blurb: 'Compete, build your brand, and secure premium collaborations.',
   },
   photographer: {

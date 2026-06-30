@@ -14,8 +14,6 @@ export default function InfluencerRegisterPage() {
       eyebrow="Influencer Registration"
       title="Become an Elite Influencer"
       subtitle="Participate in competitions, build your personal brand, and secure premium collaborations."
-      feeLabel="₹1,100"
-      feeNote="Registration Fee • Packages optional"
     >
       <Suspense fallback={<div className="font-cormorant text-cream/50 text-center py-10">Loading…</div>}>
         <InfluencerForm />

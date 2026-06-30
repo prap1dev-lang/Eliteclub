@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createAdminClient, isSupabaseConfigured } from '@/lib/supabase/admin'
-import { FEES, ROLE_META } from '@/lib/constants'
+import { ROLE_META } from '@/lib/constants'
+import { countInfluencerRegistrations, deriveSlotInfo } from '@/lib/slots'
 
 export const runtime = 'nodejs'
 
@@ -58,8 +59,35 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Please enter a valid mobile number.' }, { status: 400 })
   }
 
-  const fee = ROLE_META[role as keyof typeof ROLE_META].fee
   const pkg = clean(body.package)
+
+  // If Supabase isn't configured yet, fail gracefully with a clear message
+  // (so the form still demonstrably "works" end-to-end in dev).
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json(
+      {
+        error:
+          'Supabase is not configured yet. Add your keys to .env.local (see SETUP.md), then try again.',
+        code: 'NOT_CONFIGURED',
+      },
+      { status: 503 }
+    )
+  }
+
+  // Resolve the fee server-side (authoritative). Influencers are free for the
+  // first FREE_SLOT_LIMIT registrations; after that the standard fee applies.
+  // Counting just before insert keeps the window for races tiny.
+  let fee = ROLE_META[role as keyof typeof ROLE_META].fee
+  if (role === 'influencer') {
+    try {
+      const used = await countInfluencerRegistrations()
+      fee = deriveSlotInfo(used).nextFee
+    } catch {
+      // If the count fails, fall back to the standard influencer fee so we
+      // never silently give away a paid slot.
+      fee = ROLE_META.influencer.fee
+    }
+  }
 
   const record = {
     role,
@@ -92,19 +120,6 @@ export async function POST(req: Request) {
     payment_status: fee === 0 ? 'waived' : 'pending',
   }
 
-  // If Supabase isn't configured yet, fail gracefully with a clear message
-  // (so the form still demonstrably "works" end-to-end in dev).
-  if (!isSupabaseConfigured()) {
-    return NextResponse.json(
-      {
-        error:
-          'Supabase is not configured yet. Add your keys to .env.local (see SETUP.md), then try again.',
-        code: 'NOT_CONFIGURED',
-      },
-      { status: 503 }
-    )
-  }
-
   try {
     const supabase = createAdminClient()
     const { data, error } = await supabase
@@ -121,6 +136,8 @@ export async function POST(req: Request) {
       )
     }
 
+    const isFreeInfluencer = role === 'influencer' && fee === 0
+
     return NextResponse.json({
       ok: true,
       id: data.id,
@@ -129,7 +146,9 @@ export async function POST(req: Request) {
       message:
         fee > 0
           ? `Registration received! A fee of ₹${fee.toLocaleString('en-IN')} applies. Our team will share payment details and verify your profile shortly.`
-          : 'Registration received! Our team will verify your profile shortly.',
+          : isFreeInfluencer
+            ? 'Registration received — and your fee is waived! You claimed one of the first 100 free spots. Our team will verify your profile shortly.'
+            : 'Registration received! Our team will verify your profile shortly.',
     })
   } catch (e) {
     console.error('[register] unexpected:', e)

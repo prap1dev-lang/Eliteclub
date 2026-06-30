@@ -4,7 +4,9 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Reveal from '@/components/Reveal'
 import { PRIZE_POOL, PRIZES, WINNER_PRIVILEGES } from '@/lib/constants'
-import { Check } from 'lucide-react'
+import { Newspaper, Star, ShieldCheck, Camera, Handshake, Trophy, Crown, Award } from 'lucide-react'
+
+const PRIVILEGE_ICONS = [Newspaper, Star, ShieldCheck, Camera, Handshake, Trophy, Crown, Award]
 
 export default function Championship() {
   const ref = useRef<HTMLDivElement>(null)
@@ -52,15 +54,20 @@ export default function Championship() {
           <div className="hairline mb-5"><span>✦</span></div>
           <h3 className="font-cinzel text-2xl md:text-4xl text-cream">Winner Privileges</h3>
         </Reveal>
-        <div className="grid sm:grid-cols-2 gap-x-10 gap-y-4 max-w-4xl mx-auto">
-          {WINNER_PRIVILEGES.map((priv, i) => (
-            <Reveal key={priv} delay={i * 0.05}>
-              <div className="flex items-start gap-3 py-3 border-b border-gold/10">
-                <Check size={18} className="text-gold mt-1 shrink-0" />
-                <span className="font-cormorant text-[18px] text-cream/80">{priv}</span>
-              </div>
-            </Reveal>
-          ))}
+        <div className="grid sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
+          {WINNER_PRIVILEGES.map((priv, i) => {
+            const Icon = PRIVILEGE_ICONS[i % PRIVILEGE_ICONS.length]
+            return (
+              <Reveal key={priv} delay={i * 0.05}>
+                <div className="flex items-center gap-4 py-4 px-5 border border-white/8 bg-ink-2/50 hover:border-orange-500/35 transition-colors h-full">
+                  <div className="w-10 h-10 rounded-full border border-orange-500/30 flex items-center justify-center text-orange-400 shrink-0">
+                    <Icon size={17} />
+                  </div>
+                  <span className="font-cormorant text-[17px] text-cream/80 leading-snug">{priv}</span>
+                </div>
+              </Reveal>
+            )
+          })}
         </div>
       </div>
     </section>

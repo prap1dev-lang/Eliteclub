@@ -27,7 +27,8 @@
       "Bash(curl -s -o /dev/null -w \"REGISTER: %{http_code}\\\\n\" \"http://localhost:3000/register/influencer\" --max-time 90)",
       "Read(//c/Program Files \\(x86\\)/Microsoft/Edge/Application/**)",
       "Read(//c/Program Files/Google/Chrome/Application/**)",
-      "Read(//c/Users/varunsingh/AppData/Local/Temp/claude/d--websitem-EliteClub/73067cef-6f3d-4d21-b34b-d4e8f96353a7/scratchpad/**)"
+      "Read(//c/Users/varunsingh/AppData/Local/Temp/claude/d--websitem-EliteClub/73067cef-6f3d-4d21-b34b-d4e8f96353a7/scratchpad/**)",
+      "PowerShell(npm run lint 2>&1)"
     ]
   }
 }

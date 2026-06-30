@@ -1,34 +1,82 @@
 import Reveal from '@/components/Reveal'
-import { COMPETITION_STAGES } from '@/lib/constants'
-import { ArrowRight } from 'lucide-react'
+import { MapPin, Landmark, Trophy, Crown, Star } from 'lucide-react'
+
+/**
+ * "Your Journey to the Top" — the signature 5-stage timeline from the brand
+ * creatives: numbered medallions joined by a connector line, each with a short
+ * description. Rendered in the site's orange-on-ink theme.
+ */
+const STAGES = [
+  {
+    n: '01',
+    icon: MapPin,
+    title: 'District Selection',
+    desc: 'Take your first step by participating in your district-level selection round.',
+  },
+  {
+    n: '02',
+    icon: Landmark,
+    title: 'State Competition',
+    desc: 'Compete against the finest talent from across your state.',
+  },
+  {
+    n: '03',
+    icon: Trophy,
+    title: 'State Winner',
+    desc: 'Earn the opportunity to represent your state on the national stage.',
+  },
+  {
+    n: '04',
+    icon: Crown,
+    title: 'National Grand Finale',
+    desc: "Stand among India's best and compete for a ₹23 Lakh prize pool.",
+  },
+  {
+    n: '05',
+    icon: Star,
+    title: 'Elite Champion',
+    desc: "Become India's next Elite Champion and unlock a world of opportunities.",
+  },
+] as const
 
 export default function Stages() {
   return (
-    <section className="py-24 bg-ink-2 border-y border-gold/10">
+    <section id="journey" className="py-24 bg-ink-2 border-y border-gold/10">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <Reveal className="text-center mb-16">
-          <p className="eyebrow mb-4">The Elite Club Competition</p>
+          <div className="hairline mb-5">
+            <span className="font-cinzel text-gold text-sm tracking-[0.3em]">THE PATH</span>
+          </div>
           <h2 className="font-cinzel text-3xl md:text-5xl text-cream">
-            Five Stages to <span className="text-gold-gradient">Glory</span>
+            Your Journey to the <span className="text-gold-gradient">Top</span>
           </h2>
         </Reveal>
 
-        <div className="flex flex-col md:flex-row items-stretch justify-center gap-4">
-          {COMPETITION_STAGES.map((s, i) => (
-            <Reveal key={s.n} delay={i * 0.1} className="flex-1">
-              <div className="flex md:flex-col items-center gap-4 h-full">
-                <div className="lux-card flex-1 w-full p-6 text-center flex flex-col items-center justify-center gap-3 hover:border-gold/40 transition-colors">
-                  <span className="font-cinzel text-4xl text-gold-gradient">0{s.n}</span>
-                  <span className="font-cinzel text-cream text-[16px] tracking-wide leading-snug">
+        {/* timeline */}
+        <div className="relative">
+          {/* connector line — desktop only */}
+          <div className="hidden md:block absolute top-7 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-orange-500/40 to-transparent" />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10 md:gap-4">
+            {STAGES.map((s, i) => {
+              const Icon = s.icon
+              return (
+                <Reveal key={s.n} delay={i * 0.1} className="relative text-center">
+                  {/* medallion */}
+                  <div className="relative z-10 mx-auto w-14 h-14 rounded-full bg-ink border-2 border-orange-500/60 flex items-center justify-center text-orange-400 shadow-[0_0_30px_-8px_rgba(255,106,26,0.6)]">
+                    <Icon size={22} />
+                  </div>
+                  <p className="font-cinzel text-2xl text-gold-gradient mt-4">{s.n}</p>
+                  <h3 className="font-cinzel text-cream text-[15px] tracking-wide mt-1 leading-snug">
                     {s.title}
-                  </span>
-                </div>
-                {i < COMPETITION_STAGES.length - 1 && (
-                  <ArrowRight className="text-gold/50 rotate-90 md:rotate-0 shrink-0" size={22} />
-                )}
-              </div>
-            </Reveal>
-          ))}
+                  </h3>
+                  <p className="font-cormorant text-[15px] text-cream/55 mt-2 leading-relaxed max-w-[220px] mx-auto">
+                    {s.desc}
+                  </p>
+                </Reveal>
+              )
+            })}
+          </div>
         </div>
       </div>
     </section>

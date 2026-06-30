@@ -8,13 +8,18 @@ import { Field, Input, Select, PillGroup, Textarea } from './Fields'
 import FileUpload from './FileUpload'
 import SuccessCard from './SuccessCard'
 import {
-  INDIAN_STATES, CREATOR_CATEGORIES, FOLLOWER_BUCKETS, PACKAGES,
+  INDIAN_STATES, CREATOR_CATEGORIES, FOLLOWER_BUCKETS, PACKAGES, FEES,
 } from '@/lib/constants'
 import { ageCategoryFromDOB, formatINR } from '@/lib/utils'
+import { useSlots } from '@/components/useSlots'
+import FreeOffer from '@/components/home/FreeOffer'
 
 export default function InfluencerForm() {
   const params = useSearchParams()
   const presetPackage = params.get('package') ?? 'none'
+  const { slots } = useSlots()
+  // The base registration fee for THIS user (₹0 while free spots remain).
+  const baseFee = slots.free ? 0 : FEES.influencerRegistration
 
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState<null | { title: string; message: string }>(null)
@@ -84,6 +89,9 @@ export default function InfluencerForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-10">
+      {/* Launch offer */}
+      <FreeOffer variant="inline" />
+
       {/* Personal */}
       <section className="space-y-5">
         <h3 className="font-cinzel text-gold-light text-lg border-b border-gold/15 pb-2">
@@ -178,7 +186,14 @@ export default function InfluencerForm() {
           Membership Package <span className="font-cormorant text-cream/40 text-sm">(optional)</span>
         </h3>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <PackageOption id="none" name="Registration Only" price="₹1,100" active={pkg === 'none'} onClick={() => setPkg('none')} />
+          <PackageOption
+            id="none"
+            name="Registration Only"
+            price={baseFee === 0 ? 'FREE' : formatINR(baseFee)}
+            note={baseFee === 0 ? `₹${FEES.influencerRegistration.toLocaleString('en-IN')}` : undefined}
+            active={pkg === 'none'}
+            onClick={() => setPkg('none')}
+          />
           {PACKAGES.map((p) => (
             <PackageOption
               key={p.id}
@@ -194,8 +209,18 @@ export default function InfluencerForm() {
 
       <div className="pt-2">
         <p className="font-montserrat text-[10px] text-cream/35 mb-4 leading-relaxed">
-          Registration fee ₹1,100 (plus package, if selected). Our team will share payment
-          details and verify your profile after submission.
+          {baseFee === 0 ? (
+            <>
+              <span className="text-orange-400">Registration is FREE</span> for the first 100 users
+              (normally ₹1,100) — {slots.remaining} spots left. Optional packages are billed
+              separately. Our team will verify your profile after submission.
+            </>
+          ) : (
+            <>
+              Registration fee ₹1,100 (plus package, if selected). Our team will share payment
+              details and verify your profile after submission.
+            </>
+          )}
         </p>
         <button type="submit" disabled={submitting} className="btn-gold w-full">
           {submitting ? (<><Loader2 size={16} className="animate-spin" /> Submitting…</>) : 'Submit Registration'}
@@ -206,9 +231,9 @@ export default function InfluencerForm() {
 }
 
 function PackageOption({
-  name, price, active, onClick,
+  name, price, note, active, onClick,
 }: {
-  id: string; name: string; price: string; active: boolean; onClick: () => void
+  id: string; name: string; price: string; note?: string; active: boolean; onClick: () => void
 }) {
   return (
     <button
@@ -219,8 +244,13 @@ function PackageOption({
       }`}
     >
       <span className="block font-cinzel text-cream text-[15px] leading-tight">{name}</span>
-      <span className={`block font-cinzel text-lg mt-1 ${active ? 'text-gold-gradient' : 'text-cream/55'}`}>
-        {price}
+      <span className="flex items-baseline gap-2 mt-1">
+        <span className={`font-cinzel text-lg ${active ? 'text-gold-gradient' : 'text-cream/55'}`}>
+          {price}
+        </span>
+        {note && (
+          <span className="font-cormorant text-sm text-cream/40 line-through">{note}</span>
+        )}
       </span>
     </button>
   )

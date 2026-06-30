@@ -41,18 +41,30 @@ export default function RegisterHub() {
                   <div className="w-14 h-14 rounded-full border border-gold/30 flex items-center justify-center text-gold">
                     <Icon size={24} />
                   </div>
-                  <span
-                    className={`font-cinzel text-lg tracking-[0.15em] ${
-                      r.fee === 0 ? 'text-emerald-400' : 'text-gold-light'
-                    }`}
-                  >
-                    {r.feeLabel}
-                  </span>
+                  {r.key === 'influencer' ? (
+                    <span className="flex items-baseline gap-2">
+                      <span className="font-cinzel text-lg tracking-[0.15em] text-gold-gradient">FREE</span>
+                      <span className="font-cormorant text-sm text-cream/40 line-through">₹1,100</span>
+                    </span>
+                  ) : (
+                    <span
+                      className={`font-cinzel text-lg tracking-[0.15em] ${
+                        r.fee === 0 ? 'text-emerald-400' : 'text-gold-light'
+                      }`}
+                    >
+                      {r.feeLabel}
+                    </span>
+                  )}
                 </div>
                 <h2 className="font-cinzel text-2xl text-cream mb-3">{r.title}</h2>
                 <p className="font-cormorant text-[16px] text-cream/60 leading-relaxed flex-1">
                   {r.blurb}
                 </p>
+                {r.key === 'influencer' && (
+                  <p className="font-montserrat text-[10px] tracking-[0.15em] uppercase text-orange-400/90 mt-3">
+                    Free for the first 100 users
+                  </p>
+                )}
                 <span className="mt-7 inline-flex items-center gap-2 font-montserrat text-[10px] tracking-[0.25em] uppercase text-gold group-hover:gap-3 transition-all">
                   Begin Registration <ArrowUpRight size={14} />
                 </span>

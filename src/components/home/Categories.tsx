@@ -8,8 +8,9 @@ const CARDS = [
   {
     icon: Crown,
     title: 'Influencers',
-    fee: formatINR(FEES.influencerRegistration),
-    desc: 'Compete in state & national championships, build your personal brand, and secure premium collaborations.',
+    fee: 'FREE',
+    feeStrike: formatINR(FEES.influencerRegistration),
+    desc: 'Free for the first 100 users. Compete in state & national championships, build your personal brand, and secure premium collaborations.',
     href: '/register/influencer',
     cta: 'Register as Influencer',
   },
@@ -63,12 +64,19 @@ export default function Categories() {
                     <div className="w-12 h-12 rounded-full border border-gold/30 flex items-center justify-center text-gold">
                       <Icon size={22} />
                     </div>
-                    <span
-                      className={`font-cinzel text-sm tracking-[0.2em] ${
-                        c.fee === 'FREE' ? 'text-emerald-400/90' : 'text-gold-light'
-                      }`}
-                    >
-                      {c.fee}
+                    <span className="flex items-baseline gap-2">
+                      <span
+                        className={`font-cinzel text-sm tracking-[0.2em] ${
+                          c.fee === 'FREE' ? 'text-gold-gradient' : 'text-gold-light'
+                        }`}
+                      >
+                        {c.fee}
+                      </span>
+                      {c.feeStrike && (
+                        <span className="font-cormorant text-[13px] text-cream/40 line-through">
+                          {c.feeStrike}
+                        </span>
+                      )}
                     </span>
                   </div>
                   <h3 className="font-cinzel text-xl text-cream mb-3">{c.title}</h3>
